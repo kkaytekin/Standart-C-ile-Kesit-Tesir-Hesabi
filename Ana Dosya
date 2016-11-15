@@ -37,8 +37,17 @@ void belli_noktadan_yuklu_mesnet_tepki()
 	float uzunluk;
 	float yukleme;
 	float uzaklik;
+	float Faz;
+	float Fay;
+	float Fbz;
+	float Fby;
+	float Fk1;
+	float Fk2;
+	float Me1;
+	float Me2;
 	int secim;
 	int devam;
+	float Z1, Z2; //yerine ne yazılacağını bulunca silebiliriz ya da Z = bişey bişey deriz
 	printf("Belirli bir noktasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n ");
 	ilkasama:
 	printf("\n Sistem asagida gorsellestirilmistir: \n \n");
@@ -82,11 +91,24 @@ void belli_noktadan_yuklu_mesnet_tepki()
 		printf("              v %.3fN          \n",yukleme);
 		printf("Faz>----------------------<Fbz\n");
 		printf("    ^Fay              Fby^\n" );
-		
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = yukleme*(Z2 - uzaklik) - Fay*Z2;
 		printf("Faz = 0 \n" );
 		printf("Fbz = 0 \n" );
-		printf("Fay = %.3f N \n",yukleme - yukleme*uzaklik/uzunluk);
-		printf("Fby = %.3f N \n",yukleme*uzaklik/uzunluk );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= %.3f Nm\n",Me1);
+		printf("Me2= %.3f Nm\n",Me2);
 
 		
 		
@@ -101,11 +123,24 @@ void belli_noktadan_yuklu_mesnet_tepki()
 		printf("    Serbest Cisim Diyagrami\n");
 		printf("Faz>----------------------<Fbz\n");
 		printf("    ^Fay    %.3fN^      Fby^\n",yukleme);
-		
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme + Fay;
+		Me2 = -yukleme*(Z2 - uzaklik) - Fay*Z2;
 		printf("Faz = 0 \n" );
 		printf("Fbz = 0 \n" );
-		printf("Fay = - %.3f N \n",yukleme - yukleme*uzaklik/uzunluk );
-		printf("Fby = - %.3f N \n",yukleme*uzaklik/uzunluk );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= %.3f Nm\n",Me1);
+		printf("Me2= %.3f Nm\n",Me2);
 		
 	}
 	
@@ -122,8 +157,18 @@ void belli_noktadan_yuklu_mesnet_tepki()
  
       {
         float yukleme;
+    	float uzunluk;
 	int secim;
 	int devam;
+	float Faz;
+	float Fay;
+	float Fbz;
+	float Fby;
+	float Fk1;
+	float Fk2;
+	float Me1;
+	float Me2;
+	float Z1,Z2;
 	printf("Ortasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n \n ");
 	ilkasama:
 	printf("Sistem asagida gorsellestirilmistir: \n \n");
@@ -158,14 +203,25 @@ void belli_noktadan_yuklu_mesnet_tepki()
 		printf("              v %.3fN          \n",yukleme);
 		printf("Faz>----------------------<Fbz\n");
 		printf("    ^Fay              Fby^\n" );
-		
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = -yukleme*(Z2-uzunluk/2) + Fay*Z2;
 		printf("Faz = 0 \n" );
 		printf("Fbz = 0 \n" );
-		printf("Fay = %.3f N\n",yukleme/2 );
-		printf("Fby = %.3f N\n",yukleme/2 );
-
-		
-		
+		printf("Fay = %.3f N\n",Fay );
+		printf("Fby = %.3f N\n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= %.3f Nm\n",Me1);
+		printf("Me2= %.3f Nm\n",Me2);
+	
 	}
 	else
 	{
@@ -177,11 +233,24 @@ void belli_noktadan_yuklu_mesnet_tepki()
 		printf("    Serbest Cisim Diyagrami\n");
 		printf("Faz>----------------------<Fbz\n");
 		printf("    ^Fay    %.3f N^      Fby^\n",yukleme);
-		
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme + Fay;
+		Me2 = -yukleme*(Z2 - uzunluk/2) - Fay*Z2;
 		printf("Faz = 0 \n" );
 		printf("Fbz = 0 \n" );
-		printf("Fay = - %.3f N\n",yukleme/2 );
-		printf("Fby = - %.3f N\n",yukleme/2 );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= %.3f Nm\n",Me1);
+		printf("Me2= %.3f Nm\n",Me2);
 		
 	}
 	
