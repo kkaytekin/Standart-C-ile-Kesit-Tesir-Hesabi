@@ -1,0 +1,325 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void belli_noktadan_yuklu_mesnet_tepki();
+void ortadan_yuklu_mesnet_tepki();
+int main()
+    {
+          
+                
+          int menusecim ;
+          printf("\n \nKesit tesir hesabi programina hosgeldiniz!\n");
+          printf("\nLutfen yapmak istediginiz islem icin belirtilen degeri yazip Enter tusuna basin.\n");
+          printf("Secilen belirli bir noktasindan yuklemeye tabii olan kirisin mesnet tepkileri icin : 1\n");
+          printf("Ortasindan yuklemeye tabii olan kirisin mesnet tepkileri icin : 2\n\n");
+          secimasamasi:
+          scanf("%d", &menusecim);
+          printf("\n\n" );
+          
+          switch(menusecim)
+          {
+           case 1 : belli_noktadan_yuklu_mesnet_tepki();
+           break;
+           case 2 : ortadan_yuklu_mesnet_tepki();
+           break;
+           default :
+         printf("Belirttiginiz numara menude yok! Tekrar deneyin. \n" );
+         goto secimasamasi; 
+          }
+                
+    system("PAUSE");
+    }
+
+
+void belli_noktadan_yuklu_mesnet_tepki()
+
+     {
+	float uzunluk, yukleme, uzaklik, Faz, Fay, Fbz, Fby, Fk1, Fk2, Me1, Me2, Z1, Z2;
+	int secim, devam;
+	 //yerine ne yazılacağını bulunca silebiliriz ya da Z = bişey bişey deriz
+	printf("Belirli bir noktasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n ");
+	ilkasama:
+	printf("\n Sistem asagida gorsellestirilmistir: \n \n");
+	
+
+		printf("   |+y        v F     \n");
+		printf("   |---------------------\n");
+		printf("   ||///////////////////|\n");
+		printf("   |---------------------\n");
+		printf("   |A                    B\n");
+		printf("   |_____________________________+z\n\n");
+		printf("    A noktasi (0,0) noktasidir. \n\n");
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("              v F          \n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay              Fby^\n\n\n" );
+		printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+	ikinciasama:
+	printf("Kirisin uzunlugunu metre cinsinden belirtiniz:");
+	scanf("%f",&uzunluk);
+	printf("Newton cinsinden yuklemenin siddetini belirtiniz:");
+	scanf("%f",&yukleme);
+	printf("Yuklemenin A noktasina olan uzakligini metre cinsinden belirtiniz:");
+	scanf("%f",&uzaklik);
+		if (uzaklik > uzunluk)
+	{printf("\n Hata: Kuvvet icin belirtilen z degeri kiris uzunlugundan fazla! \n\n");
+	goto ikinciasama;
+	}
+	printf("\n Yuklemenin yonunu belirtiniz (-y yonunde ise:1 +y yonunde ise:2 ): \n \n");
+	scanf("%d",&secim);
+	
+
+	if ( secim == 1 ) 
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("              v F=%.3f     \n",yukleme);
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A                    B\n \n \n \n ");
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("              v %.3fN          \n",yukleme);
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay      |       Fby^\n" );
+		printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk - uzaklik;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = Fay - yukleme;
+		Me2 = yukleme*Z2 - Fay*(Z2+uzaklik);
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n\n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1 = Fay = %.3f N\n",Fk1);
+		printf("Fk2 = Fay - F = %.3f N\n\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= Fay*Z1  ///  Max Z1 için: %.3f Nm\n",Me1);
+		printf("Me2= F*Z2 - Fay*(Z2 + %.3f) /// Max Z2 için : %.3f Nm \n",uzaklik,Me2);	
+	}
+	else
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A          ^ F=%.3f   B\n \n \n \n",yukleme);
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay    %.3fN^      Fby^\n",yukleme);
+		printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk - uzaklik;
+		Fk1 = -Fay;
+		Me1 = -Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = yukleme*Z2 - Fay*(Z2+uzaklik);
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n\n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= -Fay*Z1 = %.3f Nm\n",Me1);
+		printf("Me2= F*Z2 - Fay*(Z2+ %.3f) /// Max Z2 için : %.3f Nm\n",uzaklik,Me2);
+	}
+	
+	printf("\nAyni islemi tekrar yapmak icin 1, \n");
+	printf("Ana menuye donmek icin 2 tusuna basin. \n");
+	printf("Programi kapatmak icin 3 tusuna basin. \n");
+	scanf("%d",&secim);
+	if (secim == 1) { goto ilkasama; }
+    else if (secim ==2) { 
+         system ("CLS");
+         main(); }
+    else if (secim ==3)
+    system("CLS");
+    {printf("\n\n\n\n");
+    printf(  "                     ..                                              \n\r"
+             "                      ++`                                            \n\r"
+             "                       :ho.        `.-/++/.                          \n\r"
+             "                        `/hh+.         ``:sds:                       \n\r"
+             "                          `-odds/-`        .MNd/`                    \n\r"
+             "                             `.+ydmdyo/:--/yMMMMd/                   \n\r"
+             "                                `:+hMMMNNNMMMddNMMh:`                \n\r"
+             "                   `-:/+++/:-:ohmNMMMMMMMMMMMm+-+mMNd`               \n\r"
+             "                `-+oo+osdMMMNMMMMMMMMMMMMMMMMMMNmNMMM/`              \n\r"
+             "                ```   .+mMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmho:.`         \n\r"
+             "                    `omMMMMMMMMMMMMMMMMMMNMdydMMdNMMMMMMMMdo+-       \n\r"
+             "                .:oymMMMMMMMMMMMMMNdo/hMMd+ds-:h/-yMdydMNdNdNN+      \n\r"
+             "              -oosdMMMMMMMMMMMMMMd:`  `yMM+.+h+.-  /y `/m.:mmmN      \n\r"
+             "             -:`  dMMMMMMMMMMMMMd.     `mMNo..+y/`  .   .  -/.s      \n\r"
+             "             `   -MMMMMMMMMMMMMM-       -mMMmo-./s/.`         `      \n\r"
+             "                `+MMMMMMMMMMMMMM-        .smMy:.``-+oo+//:-.`        \n\r"
+             "               .yNMMMMMMMMMMMMMMd.         .+dmh+:.  `-::/+:.        \n\r"
+             "               y+-mMMMMMMMMMMMMMMm/`          ./o+-`       .         \n\r"
+             "              :-  :MMMMMMMMMMMMMMMMmy/.`                             \n\r"
+             "              `   `hMMMMMMMMMMMMMMMMMMNds/.`                         \n\r"
+             "                  sNhNMMMMMMMMMMMMMMMMMMMMNh+.                       \n\r"
+             "                 -d. :mMMMMMMMMMMMMMMMMMMMMMMNh:`                    \n\r"
+             "                 /.   .hMMMMMMMMMMMMMMMMMMMMMMMMh.                   \n\r"
+             "                 .     `sMMMMMMMMMMMMMMMMMMMMMMMMN.                  \n\r"
+             "                         hMMMMMMMMMMMMMMMMMMMMMMMMy                  \n\r"
+             "                         +MMMMMMMMMMMMMMMMMMMMMMMMh                      "
+			 "\n ---------------------------   * ELVEDA * ---------------------------\n\n\n");
+    
+    system("PAUSE");
+    exit(0);
+    
+     }
+ }
+     
+ void ortadan_yuklu_mesnet_tepki()
+ 
+      {
+    float uzunluk, yukleme, uzaklik, Faz, Fay, Fbz, Fby, Fk1, Fk2, Me1, Me2, Z1, Z2;
+	int secim, devam;
+	printf("Ortasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n \n ");
+	ilkasama:
+	printf("Sistem asagida gorsellestirilmistir: \n \n");
+	
+
+		printf("   |+y        v F     \n");
+		printf("   |---------------------\n");
+		printf("   ||///////////////////|\n");
+		printf("   |---------------------\n");
+		printf("   |A                    B\n");
+		printf("   |_____________________________+z\n\n\n");
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("              v F          \n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay      |        Fby^\n\n\n" );
+        printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+	printf("Kirisin uzunlugunu belirtiniz:");
+	scanf("%f",&uzunluk);
+	printf("Newton cinsinden yuklemenin siddetini belirtiniz:");
+	scanf("%f",&yukleme);
+	printf("\n Yuklemenin yonunu belirtiniz (-y yonunde ise:1 +y yonunde ise:2 ): \n \n");
+	scanf("%d",&secim);
+	if ( secim == 1 ) 
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("              v F=%.3f     \n",yukleme);
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A                    B\n \n \n \n ");
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("              v %.3fN          \n",yukleme);
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay      |       Fby^\n" );
+		printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk/2;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = -yukleme*(Z2) + Fay*(Z2+(uzunluk/2));
+		printf("Faz = 0 \n" "Fbz = 0 \n");
+		printf("Fay = %.3f N\n",Fay );
+		printf("Fby = %.3f N\n\n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= Fay = %.3f N\n",Fk1);
+		printf("Fk2= F - Fay = %.3f N\n\n",Fk2);
+		printf("Egilme Momentleri:\n");
+		printf("Me1= Fay*Z1  /// Max Z1 icin : %.3f Nm\n",Me1);
+		printf("Me2= -F*Z2 + Fay*(Z2 + %.1f/2)  /// Max Z2 icin : %.3f Nm\n\n\n",uzunluk,Me2);
+
+		
+		
+	}
+	else
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A          ^ F=%.3f   B\n \n \n \n",yukleme);
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay    %.3f N^      Fby^\n",yukleme);
+     	printf("    --->Z1    |\n");
+	    printf("              |--->Z2\n\n");
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk/2;
+		Fk1 = -Fay;
+		Me1 = -Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = yukleme*Z2 - Fay*(Z2 + uzunluk/2);
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n\n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= -Fay = %.3f N\n",Fk1);
+		printf("Fk2= F- Fay = %.3f N\n\n",Fk2);
+		printf("Eğilme Momentleri:\n");
+		printf("Me1= -Fay*Z1 /// Max Z1 icin : %.3f Nm\n",Me1);
+		printf("Me2= F*Z2 - Fay*(Z2 + %.1f/2)  /// Max Z2 icin : %.3f Nm\n\n\n",uzunluk,Me2);
+		
+	}
+	
+	printf("\nAyni islemi tekrar yapmak icin 1, \n");
+	printf("Ana menuye donmek icin 2 tusuna basin. \n");
+	printf("Programi kapatmak icin 3 tusuna basin. \n");
+	scanf("%d",&secim);
+	if (secim == 1) { goto ilkasama; } 
+    else if (secim ==2) { 
+         system ("CLS");
+         main(); }
+    else if (secim ==3)
+    system("CLS");
+    {printf("\n\n\n\n");
+    printf(  "                     ..                                              \n\r"
+             "                      ++`                                            \n\r"
+             "                       :ho.        `.-/++/.                          \n\r"
+             "                        `/hh+.         ``:sds:                       \n\r"
+             "                          `-odds/-`        .MNd/`                    \n\r"
+             "                             `.+ydmdyo/:--/yMMMMd/                   \n\r"
+             "                                `:+hMMMNNNMMMddNMMh:`                \n\r"
+             "                   `-:/+++/:-:ohmNMMMMMMMMMMMm+-+mMNd`               \n\r"
+             "                `-+oo+osdMMMNMMMMMMMMMMMMMMMMMMNmNMMM/`              \n\r"
+             "                ```   .+mMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmho:.`         \n\r"
+             "                    `omMMMMMMMMMMMMMMMMMMNMdydMMdNMMMMMMMMdo+-       \n\r"
+             "                .:oymMMMMMMMMMMMMMNdo/hMMd+ds-:h/-yMdydMNdNdNN+      \n\r"
+             "              -oosdMMMMMMMMMMMMMMd:`  `yMM+.+h+.-  /y `/m.:mmmN      \n\r"
+             "             -:`  dMMMMMMMMMMMMMd.     `mMNo..+y/`  .   .  -/.s      \n\r"
+             "             `   -MMMMMMMMMMMMMM-       -mMMmo-./s/.`         `      \n\r"
+             "                `+MMMMMMMMMMMMMM-        .smMy:.``-+oo+//:-.`        \n\r"
+             "               .yNMMMMMMMMMMMMMMd.         .+dmh+:.  `-::/+:.        \n\r"
+             "               y+-mMMMMMMMMMMMMMMm/`          ./o+-`       .         \n\r"
+             "              :-  :MMMMMMMMMMMMMMMMmy/.`                             \n\r"
+             "              `   `hMMMMMMMMMMMMMMMMMMNds/.`                         \n\r"
+             "                  sNhNMMMMMMMMMMMMMMMMMMMMNh+.                       \n\r"
+             "                 -d. :mMMMMMMMMMMMMMMMMMMMMMMNh:`                    \n\r"
+             "                 /.   .hMMMMMMMMMMMMMMMMMMMMMMMMh.                   \n\r"
+             "                 .     `sMMMMMMMMMMMMMMMMMMMMMMMMN.                  \n\r"
+             "                         hMMMMMMMMMMMMMMMMMMMMMMMMy                  \n\r"
+             "                         +MMMMMMMMMMMMMMMMMMMMMMMMh                      "
+			 "\n ---------------------------   * ELVEDA * ---------------------------\n\n\n");
+    
+    system("PAUSE");
+    exit(0);
+    
+	// Adil hocam saygılar.
+}
+
+}
